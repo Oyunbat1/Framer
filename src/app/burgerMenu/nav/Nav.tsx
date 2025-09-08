@@ -1,0 +1,96 @@
+import React, { useState } from 'react'
+import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { menuSlide } from '../anim';
+import Link from "../link/Link"
+
+const navItems = [
+
+    {
+
+        title: "Home",
+
+        href: "#",
+
+    },
+
+    {
+
+        title: "Work",
+
+        href: "#work",
+
+    },
+
+    {
+
+        title: "About",
+
+        href: "#about",
+
+    },
+
+    {
+
+        title: "Contact",
+
+        href: "#contact",
+
+    },
+
+]
+
+const Nav = () => {
+    const pathname = usePathname();
+    const [selectedIndicator, setSelectedIndicator] = useState(pathname);
+
+    return (
+
+        <motion.div
+            variants={menuSlide}
+            initial="initial"
+            animate="enter"
+            exit="exit"
+            className='h-screen bg-[rgb(41,41,41)] fixed right-0 top-0 text-white'
+        >
+
+            <div className='box-border h-full p-[100px] flex flex-col justify-between'>
+
+                <div onMouseLeave={() => { setSelectedIndicator(pathname) }} className='flex flex-col text-[56px] gap-[12px] mt-[80px]' >
+
+                    <div className='text-[rgb(153,153,153)] border-b border-solid border-b-[rgb(153,153,153)] uppercase text-[11px] mb-[40px] pb-1' >
+
+                        <p>Navigation</p>
+
+                    </div>
+
+                    {
+
+                        navItems.map((data, index) => {
+
+                            return (
+                                <>
+                                    <Link
+                                        data={{ ...data, index }} setSelectedIndicator={setSelectedIndicator} isActive={selectedIndicator == data.href}
+                                    ></Link>
+                                </>
+                            )
+
+                        })
+
+                    }
+                </div>
+                <div className='flex flex-col w-full  gap-[10px]' >
+                    <div><p className='text-[rgb(153,153,153)] text-[11px]'>Socials</p></div>
+                    <div className='flex w-full gap-[10px]'>
+                        <a className='no-underline text-white font-[300]'>Awwwards</a>
+                        <a className='no-underline text-white font-[300]'>Instagram</a>
+                        <a className='no-underline text-white font-[300]'>Dribble</a>
+                        <a className='no-underline text-white font-[300]'>LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    )
+}
+export default Nav
